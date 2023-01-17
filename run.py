@@ -4,8 +4,6 @@ from config.initializers import init_dispatcher
 from config import polling_config
 
 
-dispatcher = init_dispatcher()
-
-
 if __name__ == '__main__':
+    dispatcher = init_dispatcher()
     executor.start_polling(dispatcher, **polling_config)
