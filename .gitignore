@@ -283,3 +283,4 @@ cython_debug/
 #.idea/
 
 !/.env
+/.env
