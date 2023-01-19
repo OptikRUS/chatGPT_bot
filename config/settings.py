@@ -23,7 +23,7 @@ class PollingSettings(BaseSettings):
 
 
 class ChatApiSettings(BaseSettings):
-    token: str = Field("api_token", env="API_CHAT_TOKEN")
+    token: str = Field("openai_api_key", env="OPENAI_API_KEY")
 
     class Config:
         env_file = ".env"
