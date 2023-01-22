@@ -2,7 +2,7 @@ from random import choice
 
 from ..keyboards import ChatButtons
 
-MAIN_MENU_MESSAGE: str = "Main menu:"
+MAIN_MENU_MESSAGE: str = "Главное меню 📎"
 WAIT_CODE: str = "⏳ Генерация кода..."
 WAIT_TEXT: str = "⏳ Генерация текста..."
 WAIT_IMAGE: str = "⏳ Генерация изображения..."
