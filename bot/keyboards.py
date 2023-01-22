@@ -13,4 +13,4 @@ class ChatButtons(Enum):
 MAIN_MENU = InlineKeyboardMarkup()
 
 for button in ChatButtons:
-    MAIN_MENU.add(InlineKeyboardButton(button.value, callback_data=button.name))
+    MAIN_MENU.add(InlineKeyboardButton(callback_data=button.name, text=button.value))
