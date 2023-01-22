@@ -1,6 +1,5 @@
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, InputMediaPhoto
 
-from bot.keyboards import ChatButtons
 from .utils import image_generation, text_generation, code_generation
 from .constants import (
     image_generation_message, code_generation_message, text_generation_message,
@@ -15,8 +14,9 @@ async def process_output(inline_button: str, message: Message):
         await message.bot.send_message(chat_id=message.chat.id, text=WRONG_INPUT)
     if inline_button == GENERATE_IMAGE_BUTTON:
         await message.bot.send_message(text=WAIT_IMAGE, chat_id=message.chat.id)
-        image_url = await image_generation(prompt)
-        await message.bot.send_photo(chat_id=message.chat.id, photo=image_url)
+        images: list = await image_generation(prompt)
+        media = [InputMediaPhoto(media=image.url) for image in images]
+        await message.bot.send_media_group(chat_id=message.chat.id, media=media)
     elif inline_button == GENERATE_TEXT_BUTTON:
         await message.bot.send_message(text=WAIT_TEXT, chat_id=message.chat.id)
         answer = await text_generation(prompt)
