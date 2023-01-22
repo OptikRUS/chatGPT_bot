@@ -15,7 +15,7 @@ async def code_generation(prompt: str) -> str:
         engine="code-davinci-002",
         prompt=prompt,
         max_tokens=1024,
-        n=1,
+        n=3,
         stop=None,
         temperature=0.7,
     )
@@ -26,7 +26,7 @@ async def text_generation(prompt: str) -> str:
     """
     Генерация текста
     """
-    response = openai.Completion.create(
+    response: OpenAIObject = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
         max_tokens=2048,
@@ -37,15 +37,16 @@ async def text_generation(prompt: str) -> str:
     return response.choices[0].text
 
 
-async def image_generation(prompt: str) -> str:
+async def image_generation(prompt: str) -> list[OpenAIObject]:
     """
     Генерация изображения
     """
-    response = openai.Image.create(
+    response: OpenAIObject = openai.Image.create(
         prompt=prompt,
-        model="image-alpha-001"
+        model="image-alpha-001",
+        n=3
     )
-    return response['data'][0]['url']
+    return response['data']
 
 
 # async def image_edit(prompt: str, image_bytes: bytes) -> str:
