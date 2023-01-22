@@ -1,5 +1,17 @@
 from random import choice
 
+from ..keyboards import ChatButtons
+
+MAIN_MENU_MESSAGE: str = "Main menu:"
+WAIT_CODE: str = "⏳ Генерация кода..."
+WAIT_TEXT: str = "⏳ Генерация текста..."
+WAIT_IMAGE: str = "⏳ Генерация изображения..."
+WRONG_INPUT: str = "Некорректный ввод. Введите валидный текст."
+
+GENERATE_IMAGE_BUTTON: str = ChatButtons.generate_image.name
+GENERATE_TEXT_BUTTON: str = ChatButtons.generate_text.name
+GENERATE_CODE_BUTTON: str = ChatButtons.generate_code.name
+
 
 REMEMBER: str = """
 Помните, чем более конкретно и ясно вы формулируете запрос, 
