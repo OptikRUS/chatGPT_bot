@@ -1,10 +1,7 @@
 from aiogram import Dispatcher
-from aiogram.dispatcher.filters import CommandStart, CommandHelp
 
-from .start import bot_help, bot_start, bot_test
+from .start import send_main_menu
 
 
 def init_common_handlers(dp: Dispatcher):
-    dp.register_message_handler(bot_start, CommandStart())
-    dp.register_message_handler(bot_help, CommandHelp())
-    dp.register_message_handler(bot_test, commands=["test"])
+    dp.register_message_handler(send_main_menu, commands=['start'])
