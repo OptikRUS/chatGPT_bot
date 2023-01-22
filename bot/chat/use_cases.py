@@ -1,4 +1,5 @@
 from aiogram.types import Message, CallbackQuery, InputMediaPhoto
+from openai.openai_object import OpenAIObject
 
 from .utils import image_generation, text_generation, code_generation
 from .constants import (
@@ -14,8 +15,8 @@ async def process_output(inline_button: str, message: Message):
         await message.bot.send_message(chat_id=message.chat.id, text=WRONG_INPUT)
     if inline_button == GENERATE_IMAGE_BUTTON:
         await message.bot.send_message(text=WAIT_IMAGE, chat_id=message.chat.id)
-        images: list = await image_generation(prompt)
-        media = [InputMediaPhoto(media=image.url) for image in images]
+        images: list[OpenAIObject] = await image_generation(prompt)
+        media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.url) for image in images]
         await message.bot.send_media_group(chat_id=message.chat.id, media=media)
     elif inline_button == GENERATE_TEXT_BUTTON:
         await message.bot.send_message(text=WAIT_TEXT, chat_id=message.chat.id)
