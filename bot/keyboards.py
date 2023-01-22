@@ -4,9 +4,9 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 class ChatButtons(Enum):
-    generate_image: str = "Generate image"
-    get_answer: str = "Get answer"
-    generate_code: str = "Generate code"
+    generate_image: str = "Генерация изображения 🌌"
+    generate_text: str = "Генерация текста 📃"
+    generate_code: str = "Генерация кода 💻"
 
 
 # Главное меню Inline
