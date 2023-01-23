@@ -15,17 +15,13 @@ async def process_output(inline_button: str, message: Message):
         await message.bot.send_message(chat_id=message.chat.id, text=WRONG_INPUT)
     if inline_button == GENERATE_IMAGE_BUTTON:
         await message.bot.send_message(text=WAIT_IMAGE, chat_id=message.chat.id)
-        images: list[OpenAIObject] = await image_generation(prompt)
-        media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.url) for image in images]
-        await message.bot.send_media_group(chat_id=message.chat.id, media=media)
+        await image_generation(prompt, message)
     elif inline_button == GENERATE_TEXT_BUTTON:
         await message.bot.send_message(text=WAIT_TEXT, chat_id=message.chat.id)
-        answer = await text_generation(prompt)
-        await message.bot.send_message(chat_id=message.chat.id, text=answer)
+        await text_generation(prompt, message)
     elif inline_button == GENERATE_CODE_BUTTON:
         await message.bot.send_message(text=WAIT_CODE, chat_id=message.chat.id)
-        code = await code_generation(prompt)
-        await message.bot.send_message(chat_id=message.chat.id, text=code)
+        await code_generation(prompt, message)
 
 
 async def button_selection(callback_query: CallbackQuery):
