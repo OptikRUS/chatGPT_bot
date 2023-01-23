@@ -1,0 +1,20 @@
+version: "3.11"
+
+services:
+
+# application service
+  bot-app:
+    container_name: ${APP_NAME}
+    build: .
+    command: python run.py
+    volumes:
+      - .:/app
+    restart: always
+    networks:
+      - custom
+    env_file:
+      - .env
+
+networks:
+  custom:
+    driver: bridge
