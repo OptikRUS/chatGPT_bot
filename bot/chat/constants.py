@@ -12,9 +12,8 @@ GENERATE_IMAGE_BUTTON: str = ChatButtons.generate_image.name
 GENERATE_TEXT_BUTTON: str = ChatButtons.generate_text.name
 GENERATE_CODE_BUTTON: str = ChatButtons.generate_code.name
 
-UNSAFE_REQUEST: str = f"""
-⚠️ Ваш запрос был отклонен из-за системы безопасности.\n
-❗Это может быть вызвано запросом, содержащим  насилие, терроризм, дискриминацию, нецензурную лексику, порнографию, оскорбления или другие материалы, которые могут навредить другим людям или нарушить законы.
+API_ERROR: str = f"""
+⚠️ Что-то пошло не так.\n
 """
 
 
