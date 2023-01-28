@@ -5,8 +5,8 @@ from aiogram.types import Message
 from .constants import API_ERROR
 
 
-def api_exceptions(api_case: Callable):
-    async def wrapper(*args, **kwargs):
+def api_exceptions(api_case: Callable) -> Callable:
+    async def wrapper(*args, **kwargs) -> None:
         try:
             await api_case(*args, **kwargs)
         except Exception as e:
