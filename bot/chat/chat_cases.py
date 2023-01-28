@@ -1,6 +1,6 @@
 from aiogram.types import Message, CallbackQuery
 
-from .utils import image_generation, text_generation, code_generation
+from .api_cases import image_generation, text_generation, code_generation
 from .constants import (
     image_generation_message, code_generation_message, text_generation_message,
     GENERATE_TEXT_BUTTON, GENERATE_CODE_BUTTON, GENERATE_IMAGE_BUTTON,
@@ -14,13 +14,13 @@ async def process_output(inline_button: str, message: Message) -> None:
         await message.bot.send_message(chat_id=message.chat.id, text=WRONG_INPUT)
     if inline_button == GENERATE_IMAGE_BUTTON:
         await message.bot.send_message(text=WAIT_IMAGE, chat_id=message.chat.id)
-        await image_generation(prompt, message)
+        await image_generation(prompt=prompt, message=message)
     elif inline_button == GENERATE_TEXT_BUTTON:
         await message.bot.send_message(text=WAIT_TEXT, chat_id=message.chat.id)
-        await text_generation(prompt, message)
+        await text_generation(prompt=prompt, message=message)
     elif inline_button == GENERATE_CODE_BUTTON:
         await message.bot.send_message(text=WAIT_CODE, chat_id=message.chat.id)
-        await code_generation(prompt, message)
+        await code_generation(prompt=prompt, message=message)
 
 
 async def button_selection(callback_query: CallbackQuery) -> None:
