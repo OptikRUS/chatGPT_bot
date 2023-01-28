@@ -1,4 +1,4 @@
-from pydantic import BaseSettings, Field
+from pydantic import BaseSettings, Field, root_validator
 
 
 class BotSettings(BaseSettings):
@@ -24,6 +24,16 @@ class PollingSettings(BaseSettings):
 
 class ChatApiSettings(BaseSettings):
     token: str = Field("openai_api_key", env="OPENAI_API_KEY")
+    headers: dict = dict()
+
+    @root_validator(pre=True)
+    def set_headers(cls, values):
+        token = values.get("token")
+        values["headers"] = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        }
+        return values
 
     class Config:
         env_file = ".env"
