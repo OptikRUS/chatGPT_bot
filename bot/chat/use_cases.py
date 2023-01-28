@@ -1,5 +1,4 @@
-from aiogram.types import Message, CallbackQuery, InputMediaPhoto
-from openai.openai_object import OpenAIObject
+from aiogram.types import Message, CallbackQuery
 
 from .utils import image_generation, text_generation, code_generation
 from .constants import (
@@ -9,7 +8,7 @@ from .constants import (
 )
 
 
-async def process_output(inline_button: str, message: Message):
+async def process_output(inline_button: str, message: Message) -> None:
     prompt: str = message.text
     if not prompt:
         await message.bot.send_message(chat_id=message.chat.id, text=WRONG_INPUT)
@@ -24,7 +23,7 @@ async def process_output(inline_button: str, message: Message):
         await code_generation(prompt, message)
 
 
-async def button_selection(callback_query: CallbackQuery):
+async def button_selection(callback_query: CallbackQuery) -> None:
     if callback_query.data == GENERATE_IMAGE_BUTTON:
         await callback_query.bot.send_message(
             chat_id=callback_query.message.chat.id, text=image_generation_message()
