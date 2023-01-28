@@ -31,7 +31,7 @@ def text_request_data(prompt: str) -> dict:
     return response_data
 
 
-def image_edit_request_data(prompt: str) -> dict:
+def image_create_request_data(prompt: str) -> dict:
     response_data: dict = dict(
         url="https://api.openai.com/v1/images/generations",
         headers=chat_config.get('headers'),
