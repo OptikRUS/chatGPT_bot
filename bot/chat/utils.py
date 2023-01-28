@@ -38,7 +38,7 @@ async def image_generation(prompt: str, message: Message) -> None:
     request_data: dict = image_request_data(prompt=prompt)
     result: dict = await create_session(request_data=request_data, message=message)
     media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.get("url")) for image in result.get("data")]
-    await message.bot.send_media_group(chat_id=message.chat.id, media=media)
+    await message.reply_media_group(media=media)
 
 
 # async def image_edit(prompt: str, image_bytes: bytes) -> str:
