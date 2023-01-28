@@ -1,67 +1,44 @@
-import openai
 from aiogram.types import InputMediaPhoto, Message
-from openai import InvalidRequestError
-from openai.openai_object import OpenAIObject
 
-from config import chat_config
-from .constants import UNSAFE_REQUEST
-
-
-openai.api_key = chat_config.get("token")
+from .sessions import create_session
+from .request_data import code_request_data, text_request_data, image_request_data
+from .wrappers import api_exceptions
 
 
+@api_exceptions
 async def code_generation(prompt: str, message: Message) -> None:
     """
-    Генерация кода
+    Генерация кода из OpenAI API
     """
-    try:
-        response: OpenAIObject = openai.Completion.create(
-            engine="code-davinci-002",
-            prompt=prompt,
-            max_tokens=1024,
-            n=3,
-            stop=None,
-            temperature=0.7,
-        )
-        code: str = response.choices[0].text
-        await message.bot.send_message(chat_id=message.chat.id, text=code)
-    except InvalidRequestError:
-        await message.bot.send_message(chat_id=message.chat.id, text=UNSAFE_REQUEST)
+
+    request_data: dict = code_request_data(prompt=prompt)
+    result: dict = await create_session(request_data=request_data, message=message)
+    code: str = result.get("choices")[0].get("text")
+    await message.reply(text=code, parse_mode="Markdown")
 
 
+@api_exceptions
 async def text_generation(prompt: str, message: Message) -> None:
     """
-    Генерация текста
+    Генерация текста из OpenAI API
     """
-    try:
-        response: OpenAIObject = openai.Completion.create(
-            engine="text-davinci-002",
-            prompt=prompt,
-            max_tokens=2048,
-            n=1,
-            stop=None,
-            temperature=0.5,
-        )
-        answer: str = response.choices[0].text
-        await message.bot.send_message(chat_id=message.chat.id, text=answer)
-    except InvalidRequestError:
-        await message.bot.send_message(chat_id=message.chat.id, text=UNSAFE_REQUEST)
+
+    request_data: dict = text_request_data(prompt=prompt)
+    result: dict = await create_session(request_data=request_data, message=message)
+    text: str = result.get("choices")[0].get("text")
+    await message.reply(text=text)
 
 
+@api_exceptions
 async def image_generation(prompt: str, message: Message) -> None:
     """
-    Генерация изображения
+    Генерация изображения из OpenAI API
     """
-    try:
-        response: OpenAIObject = openai.Image.create(
-            prompt=prompt,
-            model="image-alpha-001",
-            n=3
-        )
-        media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.url) for image in response['data']]
-        await message.bot.send_media_group(chat_id=message.chat.id, media=media)
-    except InvalidRequestError:
-        await message.bot.send_message(chat_id=message.chat.id, text=UNSAFE_REQUEST)
+
+    request_data: dict = image_request_data(prompt=prompt)
+    result: dict = await create_session(request_data=request_data, message=message)
+    media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.get("url")) for image in result.get("data")]
+    await message.bot.send_media_group(chat_id=message.chat.id, media=media)
 
 
 # async def image_edit(prompt: str, image_bytes: bytes) -> str:
