@@ -2,7 +2,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery, Message
 
 from bot.keyboards import MAIN_MENU
-from .use_cases import process_output, button_selection
+from .chat_cases import process_output, button_selection
 from .constants import MAIN_MENU_MESSAGE
 
 
