@@ -11,13 +11,13 @@ async def create_session(request_data: dict, message: Message) -> dict:
             if response.status == 400:
                 result = await response.json()
                 error_message = result.get("error").get("message")
-                create_log(message=message, error=result, answer=error_message)
+                await create_log(message=message, error=result, answer=error_message)
                 await message.reply(text=error_message)
             elif response.status == 502:
                 result = await response.text()
                 print("===502===")
                 print(result)
                 await message.reply(text=result, parse_mode=ParseMode.HTML)
-                create_log(message=message, error=ClientResponseError, answer=result)
+                await create_log(message=message, error=ClientResponseError, answer=result)
             else:
                 return await response.json()
