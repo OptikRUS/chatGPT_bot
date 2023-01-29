@@ -22,8 +22,7 @@ def parse_error(error: Exception):
     return API_ERROR
 
 
-def parse_log(message: Message | dict, error: Exception, answer: str) -> None:
-    message: Message = message.get("message") if message.__class__ == dict else message
+def create_log(message: Message, error: Exception, answer: str) -> None:
     msg: dict = dict(
         error=error,
         answer_to_user=answer,
