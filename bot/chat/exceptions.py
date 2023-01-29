@@ -17,11 +17,17 @@ logging.basicConfig(
 
 
 def parse_error(error: Exception):
+    print()
     if error.__class__ == TimeoutError:
         return TIME_OUT_ERROR
     return API_ERROR
 
 
-def parse_log(message: Message | dict) -> None:
+def parse_log(message: Message | dict, error: Exception, answer: str) -> None:
     message: Message = message.get("message") if message.__class__ == dict else message
-    logging.error(msg=message)
+    msg: dict = dict(
+        error=error,
+        answer_to_user=answer,
+        message=message
+    )
+    logging.error(msg=msg)
