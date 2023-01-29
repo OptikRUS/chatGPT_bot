@@ -6,6 +6,7 @@ from aiohttp import ClientResponseError
 from aiogram.types import Message
 from aiogram.utils.exceptions import MessageIsTooLong
 
+from config import chat_config
 from .constants import API_ERROR, TIME_OUT_ERROR, MESSAGE_IS_TOO_LONG_ERROR, SERVER_502_ERROR
 
 
@@ -31,11 +32,11 @@ def parse_error(error: Exception) -> str:
     return API_ERROR
 
 
-def create_log(message: Message, error: Exception, answer: str) -> dict:
+async def create_log(message: Message, error: Exception, answer: str) -> None:
     msg: dict = dict(
         error=error,
         answer_to_user=answer,
         message=message
     )
     logging.error(msg=msg)
-    return msg
+    await message.bot.send_message(chat_id=chat_config.get("log_chat_id"), text=msg)
