@@ -15,5 +15,6 @@ def api_exceptions(api_case: Callable) -> Callable:
             message = kwargs.get("message") or next((arg for arg in args if isinstance(arg, Message)), None)
             msg_for_log_chat: dict = create_log(message=message, error=error, answer=error_message_for_user)
             await message.reply(text=error_message_for_user)
+            msg_for_log_chat["api_case"] = api_case.__name__
             await message.bot.send_message(chat_id=chat_config.get("log_chat_id"), text=msg_for_log_chat)
     return wrapper
