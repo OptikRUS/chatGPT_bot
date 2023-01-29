@@ -17,7 +17,6 @@ logging.basicConfig(
 
 
 def parse_error(error: Exception):
-    print()
     if error.__class__ == TimeoutError:
         return TIME_OUT_ERROR
     return API_ERROR
