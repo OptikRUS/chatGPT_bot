@@ -24,6 +24,7 @@ class PollingSettings(BaseSettings):
 
 class ChatApiSettings(BaseSettings):
     token: str = Field("openai_api_key", env="OPENAI_API_KEY")
+    log_chat_id: int = Field(415707746, env="LOG_CHAT_ID")
     headers: dict = dict()
 
     @root_validator(pre=True)
