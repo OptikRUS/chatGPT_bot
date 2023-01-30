@@ -2,7 +2,8 @@ from typing import Callable
 
 from aiogram.types import Message
 
-from .exceptions import parse_error, create_log
+from .constants import parse_error
+from .logger import create_log
 
 
 def api_exceptions(api_case: Callable) -> Callable:
