@@ -1,38 +1,3 @@
-from random import choice
-
-from ..keyboards import ChatButtons
-
-MAIN_MENU_MESSAGE: str = "Главное меню 📎"
-WAIT_CODE: str = "⏳ Генерация кода..."
-WAIT_TEXT: str = "⏳ Генерация текста..."
-WAIT_IMAGE: str = "⏳ Генерация изображения..."
-WRONG_INPUT: str = "Некорректный ввод. Введите валидный текст."
-
-GENERATE_IMAGE_BUTTON: str = ChatButtons.generate_image.name
-GENERATE_TEXT_BUTTON: str = ChatButtons.generate_text.name
-GENERATE_CODE_BUTTON: str = ChatButtons.generate_code.name
-
-API_ERROR: str = f"""
-⚠️ Что-то пошло не так.\n
-"""
-
-TIME_OUT_ERROR: str = f"""
-⚠️ Время ответа от сервиса истекло.\n
-"""
-
-MESSAGE_IS_TOO_LONG_ERROR: str = f"""
-⚠️ Слишком большая длина сообщения в ответе.\n
-"""
-
-SERVER_502_ERROR: str = f"""
-⚠️ Ошибка ответа сервиса.\n
-"""
-
-
-REMEMBER: str = """
-Помните, чем более конкретно и ясно вы формулируете запрос, тем лучше результат генерации текста будет соответствовать вашим ожиданиям.\n
-"""
-
 IMAGE_GENERATION_REQUEST_EXAMPLES: tuple = (
     "Создайте изображение красивой девушки на пляже",
     "Сгенерируйте изображение горной дороги в зимний день",
@@ -67,27 +32,3 @@ CODE_GENERATION_REQUEST_EXAMPLES: tuple = (
     "Создайте класс для работы с базой данных MySQL на Python",
     "Напишите скрипт для автоматического отправления электронной почты с использованием smtplib в Python"
 )
-
-
-def image_generation_message() -> str:
-    message: str = f"""
-    {REMEMBER}
-Например:\n"{choice(IMAGE_GENERATION_REQUEST_EXAMPLES)}"\n\nВведите запрос для генерации изображения:
-    """
-    return message
-
-
-def text_generation_message() -> str:
-    message: str = f"""
-    {REMEMBER}
-Например:\n"{choice(TEXT_GENERATION_REQUEST_EXAMPLES)}"\n\nВведите запрос для генерации текста:
-    """
-    return message
-
-
-def code_generation_message() -> str:
-    message: str = f"""
-    {REMEMBER}
-Например:\n"{choice(CODE_GENERATION_REQUEST_EXAMPLES)}"\n\nВведите запрос для генерации кода:
-    """
-    return message
