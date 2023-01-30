@@ -1,8 +1,8 @@
 from aiogram.types import InputMediaPhoto, Message
 
 from .sessions import create_session
-from .request_data import code_request_data, text_request_data, image_create_request_data
 from .wrappers import api_exceptions
+from .constants.request_data import code_request_data, text_request_data, image_create_request_data
 
 
 @api_exceptions
