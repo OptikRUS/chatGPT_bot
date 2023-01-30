@@ -30,12 +30,11 @@ async def bad_response(response: ClientResponse, message: Message):
         raise HTTPInternalServerError
     elif response.status == 502:
         raise HTTPBadGateway
-    else:
-        error_data: dict = dict(
-            headers=response.headers,
-            content_type=response.content_type,
-            reason=response.reason,
-            body=response._body,
-            text=await response.text()
-        )
-        raise HTTPError(**error_data)
+    error_data: dict = dict(
+        headers=response.headers,
+        content_type=response.content_type,
+        reason=response.reason,
+        body=response._body,
+        text=await response.text()
+    )
+    raise HTTPError(**error_data)
