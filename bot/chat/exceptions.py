@@ -32,7 +32,7 @@ def parse_error(error: Exception) -> str:
     return API_ERROR
 
 
-async def create_log(message: Message, error: Exception, answer: str) -> None:
+async def create_log(message: Message, error: dict | str, answer: str) -> None:
     msg: dict = dict(
         error=error,
         answer_to_user=answer,
