@@ -21,7 +21,7 @@ async def create_session(request_data: dict, message: Message) -> dict:
                 await message.reply(text=result, parse_mode=ParseMode.HTML)
                 await create_log(message=message, error=result, answer=result)
                 raise HTTPBadGateway
-            if response.status == 429:
+            elif response.status == 429:
                 result: dict = await response.json()
                 error_message: str = result.get("error").get("message")
                 await message.reply(text=error_message)
