@@ -7,7 +7,7 @@ TIME_OUT_ERROR: str = f"""
 """
 
 MESSAGE_IS_TOO_LONG_ERROR: str = f"""
-⚠️ Слишком большая длина сообщения в ответе.\n
+⚠️ Слишком большая длина сообщения в ответе. Попробуйте ещё раз.\n
 """
 
 UNAUTHORIZED_ERROR: str = f"""
