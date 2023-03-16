@@ -1,6 +1,6 @@
 import os
 
-from .settings import ChatApiSettings, BotSettings, PollingSettings, BranchValidate
+from .settings import ChatApiSettings, BotSettings, PollingSettings
 
 base_dir: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
