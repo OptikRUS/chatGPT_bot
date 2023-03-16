@@ -1,5 +1,4 @@
 from asyncio import TimeoutError
-from aiogram.utils.exceptions import MessageIsTooLong
 from aiohttp.web_exceptions import (
     HTTPForbidden,
     HTTPBadGateway,
@@ -16,7 +15,6 @@ from .errors import (
     SERVER_502_ERROR,
     UNAUTHORIZED_ERROR,
     TOO_MANY_REQUESTS_ERROR,
-    MESSAGE_IS_TOO_LONG_ERROR,
     INTERNAL_SERVER_ERROR_ERROR
 )
 
@@ -36,6 +34,4 @@ def parse_error(error: Exception) -> str:
         return INTERNAL_SERVER_ERROR_ERROR
     elif error.__class__ == HTTPBadGateway:
         return SERVER_502_ERROR
-    elif error.__class__ == MessageIsTooLong:
-        return MESSAGE_IS_TOO_LONG_ERROR
     return API_ERROR

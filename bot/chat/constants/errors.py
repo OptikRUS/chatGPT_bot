@@ -6,10 +6,6 @@ TIME_OUT_ERROR: str = f"""
 ⚠️ Время ответа от сервиса истекло.\n
 """
 
-MESSAGE_IS_TOO_LONG_ERROR: str = f"""
-⚠️ Слишком большая длина сообщения в ответе.\n
-"""
-
 UNAUTHORIZED_ERROR: str = f"""
 ⚠️ Ошибка авторизации.\n
 """
