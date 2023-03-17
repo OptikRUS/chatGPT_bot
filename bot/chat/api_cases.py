@@ -18,6 +18,7 @@ async def code_generation(prompt: str, message: Message) -> None:
 
     await slice_message(
         replace_symbol_func=replace_symbol,
+        response_style='code',
         message=message,
         text=code
     )
