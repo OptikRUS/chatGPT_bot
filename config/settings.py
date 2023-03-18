@@ -18,7 +18,7 @@ class BotSettings(AdvancedSettings):
     def get_token(cls, values: dict):
         if EnvSettings().env == "dev":
             values["token"] = values.get("token_dev")
-            values.pop("token_dev")
+        values.pop("token_dev")
         return values
 
 
@@ -42,9 +42,9 @@ class ChatApiSettings(AdvancedSettings):
         if EnvSettings().env == "dev":
             values["token"] = values.get("token_dev")
             values["log_chat_id"] = values.get("log_chat_id_dev")
-            values.pop("token_dev")
-            values.pop("log_chat_id_dev")
 
+        values.pop("token_dev")
+        values.pop("log_chat_id_dev")
         token = values.get("token")
         values["headers"] = {
             "Content-Type": "application/json",
