@@ -41,6 +41,7 @@ async def text_generation(prompt: str, message: Message) -> None:
     )
 
 
+
 @api_exceptions
 async def image_generation(prompt: str, message: Message) -> None:
     """
