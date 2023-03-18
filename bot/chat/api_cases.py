@@ -15,7 +15,11 @@ async def code_generation(prompt: str, message: Message) -> None:
     result: dict = await create_session(request_data=request_data, message=message)
     code: str = result.get("choices")[0].get("text")
 
-    await message.reply(text=code)
+    if len(code) > 4096:
+        for x in range(0, len(code), 4096):
+            await message.reply(text=code[x:x + 4096])
+    else:
+        await message.reply(text=code)
 
 
 @api_exceptions
@@ -28,7 +32,12 @@ async def text_generation(prompt: str, message: Message) -> None:
     result: dict = await create_session(request_data=request_data, message=message)
     text: str = result.get("choices")[0].get("text")
 
-    await message.reply(text=text)
+    if len(text) > 4096:
+        for x in range(0, len(text), 4096):
+            await message.reply(text=text[x:x + 4096])
+    else:
+        await message.reply(text=text)
+
 
 
 @api_exceptions
@@ -40,4 +49,5 @@ async def image_generation(prompt: str, message: Message) -> None:
     request_data: dict = image_create_request_data(prompt=prompt)
     result: dict = await create_session(request_data=request_data, message=message)
     media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.get("url")) for image in result.get("data")]
+
     await message.reply_media_group(media=media)
