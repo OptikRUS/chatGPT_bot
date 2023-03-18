@@ -14,6 +14,7 @@ async def code_generation(prompt: str, message: Message) -> None:
     request_data: dict = code_request_data(prompt=prompt)
     result: dict = await create_session(request_data=request_data, message=message)
     code: str = result.get("choices")[0].get("text")
+
     await message.reply(text=code)
 
 
@@ -26,6 +27,7 @@ async def text_generation(prompt: str, message: Message) -> None:
     request_data: dict = text_request_data(prompt=prompt)
     result: dict = await create_session(request_data=request_data, message=message)
     text: str = result.get("choices")[0].get("text")
+
     await message.reply(text=text)
 
 
