@@ -3,7 +3,7 @@ from config import chat_config
 
 def code_request_data(prompt: str) -> dict:
     response_data: dict = dict(
-        url="https://api.openai.com/v1/engines/code-davinci-001/completions",
+        url="https://api.openai.com/v1/engines/code-cushman-001/completions",
         headers=chat_config.get('headers'),
         json=dict(
             prompt=prompt,
