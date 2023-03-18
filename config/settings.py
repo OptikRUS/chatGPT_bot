@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseSettings, Field, root_validator
 
 
@@ -7,24 +9,20 @@ class AdvancedSettings(BaseSettings):
         env_file_encoding = "utf-8"
 
 
-class BranchValidate(AdvancedSettings):
-    branch_name: str = Field(..., env="ENV")
-    dev_bot_token: str = Field(..., env='DEV_BRANCH_BOT_TOKEN')
-    dev_api_token: str = Field(..., env='DEV_API_CHAT_TOKEN')
-    dev_logs_chat: int = Field(..., env='DEV_LOGS_CHAT')
+class EnvSettings(AdvancedSettings):
+    env: str = Field(..., env="ENV")
 
 
 class BotSettings(AdvancedSettings):
     token: str = Field("bot_token", env="BOT_TOKEN")
+    token_dev: Optional[str] = Field("bot_token", env="BOT_TOKEN_DEV")
     validate_token: bool = Field(True, env="BOT_VALIDATE_TOKEN")
 
-    @root_validator(pre=True)
-    def check_branch(cls, values):
-        branch_name: dict[str] = BranchValidate().dict()
-
-        if branch_name.get('branch_name') == 'dev':
-            values.update({'token': branch_name.get('dev_bot_token')})
-
+    @root_validator
+    def get_token(cls, values: dict):
+        if EnvSettings().env == "dev":
+            values["token"] = values.get("token_dev")
+            values.pop("token_dev")
         return values
 
 
@@ -38,20 +36,18 @@ class PollingSettings(AdvancedSettings):
 
 class ChatApiSettings(AdvancedSettings):
     token: str = Field("openai_api_key", env="OPENAI_API_KEY")
-    log_chat_id: int = Field(..., env="LOGS_CHAT")
+    token_dev: Optional[str] = Field("openai_api_key_dev", env="OPENAI_API_KEY_DEV")
+    log_chat_id: int = Field(415707746, env="LOG_CHAT_ID")
+    log_chat_id_dev: Optional[int] = Field(415707746, env="LOG_CHAT_ID_DEV")
     headers: dict = dict()
 
-    @root_validator(pre=True)
+    @root_validator
     def set_headers(cls, values):
-        branch_name: dict[str] = BranchValidate().dict()
-
-        if branch_name.get('branch_name') == 'dev':
-            dict_for_update: dict = {
-                'token': branch_name.get('dev_api_token'),
-                'log_chat_id': branch_name.get('dev_logs_chat')
-            }
-
-            values.update(dict_for_update)
+        if EnvSettings().env == "dev":
+            values["token"] = values.get("token_dev")
+            values["log_chat_id"] = values.get("log_chat_id_dev")
+            values.pop("token_dev")
+            values.pop("log_chat_id_dev")
 
         token = values.get("token")
         values["headers"] = {
@@ -60,3 +56,4 @@ class ChatApiSettings(AdvancedSettings):
         }
 
         return values
+
