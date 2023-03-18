@@ -46,10 +46,9 @@ class ChatApiSettings(AdvancedSettings):
         values.pop("token_dev")
         values.pop("log_chat_id_dev")
         token = values.get("token")
+
         values["headers"] = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {token}"
         }
-
         return values
-
