@@ -1,25 +1,33 @@
-from typing import Optional
-
 from pydantic import Field, root_validator
 
-from base import AdvancedSettings
+from .base import AdvancedSettings
 
 
 class EnvSettings(AdvancedSettings):
     env: str = Field("dev", env="ENV")
+    bot_token: str = Field("bot_token", env="BOT_TOKEN")
+    bot_token_dev: str = Field("bot_token_dev", env="BOT_TOKEN_DEV")
+    api_token: str = Field("openai_api_key", env="OPENAI_API_KEY")
+    api_token_dev: str = Field("openai_api_key_dev", env="OPENAI_API_KEY_DEV")
+    log_chat_id: int = Field(415707746, env="LOG_CHAT_ID")
+    log_chat_id_dev: int = Field(415707746, env="LOG_CHAT_ID_DEV")
+
+    @root_validator
+    def _env_validation(cls, values: dict):
+        if values.get("env") == "dev":
+            values["bot_token"] = values.get("bot_token_dev")
+            values["api_token"] = values.get("api_token_dev")
+            values["log_chat_id"] = values.get("log_chat_id_dev")
+        values.pop("bot_token_dev")
+        values.pop("api_token_dev")
+        values.pop("log_chat_id_dev")
+
+        return values
 
 
 class BotSettings(AdvancedSettings):
-    token: str = Field("bot_token", env="BOT_TOKEN")
-    token_dev: Optional[str] = Field("bot_token", env="BOT_TOKEN_DEV")
+    token: str = Field(EnvSettings().bot_token)
     validate_token: bool = Field(True, env="BOT_VALIDATE_TOKEN")
-
-    @root_validator
-    def get_token(cls, values: dict):
-        if EnvSettings().env == "dev":
-            values["token"] = values.get("token_dev")
-        values.pop("token_dev")
-        return values
 
 
 class PollingSettings(AdvancedSettings):
@@ -31,22 +39,18 @@ class PollingSettings(AdvancedSettings):
 
 
 class ChatApiSettings(AdvancedSettings):
-    token: str = Field("openai_api_key", env="OPENAI_API_KEY")
-    token_dev: Optional[str] = Field("openai_api_key_dev", env="OPENAI_API_KEY_DEV")
+    token: str = Field(EnvSettings().api_token)
     log_chat_id: int = Field(415707746, env="LOG_CHAT_ID")
-    log_chat_id_dev: Optional[int] = Field(415707746, env="LOG_CHAT_ID_DEV")
+    log_chat_id_dev: int = Field(415707746, env="LOG_CHAT_ID_DEV")
     headers: dict = dict()
 
     @root_validator
-    def set_headers(cls, values):
+    def set_headers(cls, values: dict):
         if EnvSettings().env == "dev":
-            values["token"] = values.get("token_dev")
             values["log_chat_id"] = values.get("log_chat_id_dev")
 
-        values.pop("token_dev")
         values.pop("log_chat_id_dev")
         token = values.get("token")
-
         values["headers"] = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {token}"
