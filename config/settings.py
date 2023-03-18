@@ -1,12 +1,8 @@
 from typing import Optional
 
-from pydantic import BaseSettings, Field, root_validator
+from pydantic import Field, root_validator
 
-
-class AdvancedSettings(BaseSettings):
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+from base import AdvancedSettings
 
 
 class EnvSettings(AdvancedSettings):
