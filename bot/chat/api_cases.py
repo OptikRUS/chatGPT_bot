@@ -1,4 +1,4 @@
-from aiogram.types import InputMediaPhoto, Message
+from aiogram.types import InputMediaPhoto, Message, ParseMode
 
 from .sessions import create_session
 from .utils import slice_message, replace_symbol
@@ -16,12 +16,13 @@ async def code_generation(prompt: str, message: Message) -> None:
     result: dict = await create_session(request_data=request_data, message=message)
     code: str = result.get("choices")[0].get("text")
 
-    await slice_message(
+    response_parts: list[str] = slice_message(
         replace_symbol_func=replace_symbol,
         response_style='code',
-        message=message,
         text=code
     )
+    for message_part in response_parts:
+        await message.reply(text=message_part, parse_mode=ParseMode.MARKDOWN_V2)
 
 
 @api_exceptions
@@ -34,12 +35,13 @@ async def text_generation(prompt: str, message: Message) -> None:
     result: dict = await create_session(request_data=request_data, message=message)
     text: str = result.get("choices")[0].get("text")
 
-    await slice_message(
+    response_parts: list[str] = slice_message(
         replace_symbol_func=replace_symbol,
-        message=message,
+        response_style='text',
         text=text
     )
-
+    for message_part in response_parts:
+        await message.reply(text=message_part, parse_mode=ParseMode.MARKDOWN_V2)
 
 
 @api_exceptions
