@@ -10,7 +10,7 @@ class AdvancedSettings(BaseSettings):
 
 
 class EnvSettings(AdvancedSettings):
-    env: str = Field(..., env="ENV")
+    env: str = Field("dev", env="ENV")
 
 
 class BotSettings(AdvancedSettings):
