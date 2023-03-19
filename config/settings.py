@@ -15,11 +15,11 @@ class EnvSettings(AdvancedSettings):
     @root_validator
     def _env_validation(cls, values: dict):
         if values.get("env") == "dev":
-            values.update({
-                "bot_token": values.get("bot_token_dev"),
-                "api_token": values.get("api_token_dev"),
-                "log_chat_id": values.get("log_chat_id_dev")
-            })
+            values.update(
+                bot_token=values.get("bot_token_dev"),
+                api_token=values.get("api_token_dev"),
+                log_chat_id=values.get("log_chat_id_dev")
+            )
 
         values.pop("bot_token_dev")
         values.pop("api_token_dev")
