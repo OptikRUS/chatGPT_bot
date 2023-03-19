@@ -21,6 +21,7 @@ async def code_generation(prompt: str, message: Message) -> None:
         response_style='code',
         text=code
     )
+
     for message_part in response_parts:
         await message.reply(text=message_part, parse_mode=ParseMode.MARKDOWN_V2)
 
@@ -40,6 +41,7 @@ async def text_generation(prompt: str, message: Message) -> None:
         response_style='text',
         text=text
     )
+
     for message_part in response_parts:
         await message.reply(text=message_part, parse_mode=ParseMode.MARKDOWN_V2)
 

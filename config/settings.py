@@ -15,9 +15,12 @@ class EnvSettings(AdvancedSettings):
     @root_validator
     def _env_validation(cls, values: dict):
         if values.get("env") == "dev":
-            values["bot_token"] = values.get("bot_token_dev")
-            values["api_token"] = values.get("api_token_dev")
-            values["log_chat_id"] = values.get("log_chat_id_dev")
+            values.update({
+                "bot_token": values.get("bot_token_dev"),
+                "api_token": values.get("api_token_dev"),
+                "log_chat_id": values.get("log_chat_id_dev")
+            })
+
         values.pop("bot_token_dev")
         values.pop("api_token_dev")
         values.pop("log_chat_id_dev")
@@ -40,19 +43,15 @@ class PollingSettings(AdvancedSettings):
 
 class ChatApiSettings(AdvancedSettings):
     token: str = Field(EnvSettings().api_token)
-    log_chat_id: int = Field(415707746, env="LOG_CHAT_ID")
-    log_chat_id_dev: int = Field(415707746, env="LOG_CHAT_ID_DEV")
+    logs_chat_id: int = Field(EnvSettings().log_chat_id)
     headers: dict = dict()
 
     @root_validator
     def set_headers(cls, values: dict):
-        if EnvSettings().env == "dev":
-            values["log_chat_id"] = values.get("log_chat_id_dev")
-
-        values.pop("log_chat_id_dev")
         token = values.get("token")
         values["headers"] = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {token}"
         }
+
         return values
