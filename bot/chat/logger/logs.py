@@ -25,4 +25,4 @@ async def create_log(message: Message, error: Exception | dict, answer: str) -> 
         message=message
     )
     logging.error(msg=msg)
-    await message.bot.send_message(chat_id=chat_config.get("log_chat_id"), text=msg)
+    await message.bot.send_message(chat_id=chat_config.get("logs_chat_id"), text=msg)
