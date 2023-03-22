@@ -7,7 +7,7 @@ TIME_OUT_ERROR: str = f"""
 """
 
 ANSWER_MESSAGE_IS_TOO_LONG_ERROR: str = f"""
-⚠️ Слишком большая длина сообщения в ответе. Попробуйте ещё раз.\n
+⚠️ Слишком большая длина сообщения. Длина сообщения не должна привышать 500 символов.\n
 """
 
 REQUEST_MESSAGE_IS_TOO_LONG_ERROR: str = f"""

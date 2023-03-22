@@ -11,7 +11,6 @@ async def code_generation(prompt: str, message: Message) -> None:
     """
     Генерация кода из OpenAI API
     """
-
     request_data: dict = code_request_data(prompt=prompt)
     result: dict = await create_session(request_data=request_data, message=message)
     code: str = result.get("choices")[0].get("text")
@@ -31,7 +30,6 @@ async def text_generation(prompt: str, message: Message) -> None:
     """
     Генерация текста из OpenAI API
     """
-
     request_data: dict = text_request_data(prompt=prompt)
     result: dict = await create_session(request_data=request_data, message=message)
     text: str = result.get("choices")[0].get("text")
