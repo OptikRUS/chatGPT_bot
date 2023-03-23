@@ -6,21 +6,25 @@ from .constants import (
     GENERATE_TEXT_BUTTON, GENERATE_CODE_BUTTON, GENERATE_IMAGE_BUTTON,
     WAIT_CODE, WAIT_TEXT, WAIT_IMAGE, WRONG_INPUT
 )
+from .constants.errors import ANSWER_MESSAGE_IS_TOO_LONG_ERROR
 
 
 async def process_output(inline_button: str, message: Message) -> None:
     prompt: str = message.text
     if not prompt:
         await message.bot.send_message(chat_id=message.chat.id, text=WRONG_INPUT)
-    if inline_button == GENERATE_IMAGE_BUTTON:
-        await message.bot.send_message(text=WAIT_IMAGE, chat_id=message.chat.id)
-        await image_generation(prompt=prompt, message=message)
-    elif inline_button == GENERATE_TEXT_BUTTON:
-        await message.bot.send_message(text=WAIT_TEXT, chat_id=message.chat.id)
-        await text_generation(prompt=prompt, message=message)
-    elif inline_button == GENERATE_CODE_BUTTON:
-        await message.bot.send_message(text=WAIT_CODE, chat_id=message.chat.id)
-        await code_generation(prompt=prompt, message=message)
+    elif len(prompt) > 500:
+        await message.bot.send_message(chat_id=message.chat.id, text=ANSWER_MESSAGE_IS_TOO_LONG_ERROR)
+    else:
+        if inline_button == GENERATE_IMAGE_BUTTON:
+            await message.bot.send_message(text=WAIT_IMAGE, chat_id=message.chat.id)
+            await image_generation(prompt=prompt, message=message)
+        elif inline_button == GENERATE_TEXT_BUTTON:
+            await message.bot.send_message(text=WAIT_TEXT, chat_id=message.chat.id)
+            await text_generation(prompt=prompt, message=message)
+        elif inline_button == GENERATE_CODE_BUTTON:
+            await message.bot.send_message(text=WAIT_CODE, chat_id=message.chat.id)
+            await code_generation(prompt=prompt, message=message)
 
 
 async def button_selection(callback_query: CallbackQuery) -> None:
