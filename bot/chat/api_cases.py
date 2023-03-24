@@ -1,9 +1,17 @@
+import json
+
+import aiohttp
 from aiogram.types import InputMediaPhoto, Message, ParseMode
 
 from .sessions import create_session
 from .utils import slice_message, replace_symbol
 from .wrappers import api_exceptions
-from .constants.request_data import code_request_data, text_request_data, image_create_request_data
+from .constants.request_data import (
+    code_request_data,
+    text_request_data,
+    image_create_request_data,
+    image_edit_request_data
+)
 
 
 @api_exceptions
@@ -51,6 +59,19 @@ async def image_generation(prompt: str, message: Message) -> None:
     """
 
     request_data: dict = image_create_request_data(prompt=prompt)
+    result: dict = await create_session(request_data=request_data, message=message)
+    media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.get("url")) for image in result.get("data")]
+
+    await message.reply_media_group(media=media)
+
+
+@api_exceptions
+async def image_variation(photo_url: str, message: Message):
+    """
+    Редактирование фото из OpenAI API
+    """
+
+    request_data: dict = await image_edit_request_data(message=message)
     result: dict = await create_session(request_data=request_data, message=message)
     media: list[InputMediaPhoto] = [InputMediaPhoto(media=image.get("url")) for image in result.get("data")]
 

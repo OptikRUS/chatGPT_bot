@@ -1,4 +1,4 @@
-from aiogram import Dispatcher
+from aiogram import Dispatcher, types
 
 from .chat import process_callback_inline_buttons, process_input
 
@@ -10,4 +10,4 @@ def init_chat_handlers(dp: Dispatcher):
         process_callback_inline_buttons,
         lambda c: c.data in [button.name for button in ChatButtons]
     )
-    dp.register_message_handler(process_input)
+    dp.register_message_handler(process_input, content_types=[types.ContentType.DOCUMENT, types.ContentType.TEXT])
