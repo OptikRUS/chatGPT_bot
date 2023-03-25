@@ -4,7 +4,7 @@ from .examples import (
     IMAGE_GENERATION_REQUEST_EXAMPLES,
     TEXT_GENERATION_REQUEST_EXAMPLES,
     CODE_GENERATION_REQUEST_EXAMPLES,
-    EDIT_IMAGE_GENERATION_REQUEST_EXAMPLES
+    IMAGE_VARIATION
 )
 
 
@@ -39,7 +39,6 @@ def code_generation_message() -> str:
 
 def edit_image_generation_message() -> str:
     message: str = f"""
-    {REMEMBER}
-Например:\n"{choice(EDIT_IMAGE_GENERATION_REQUEST_EXAMPLES)}"\n\nОтправьте фото и описание для редактирования:
+    {IMAGE_VARIATION}\nОтправьте документ в формате png:
     """
     return message

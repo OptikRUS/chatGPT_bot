@@ -15,6 +15,5 @@ def init_chat_handlers(dp: Dispatcher):
         content_types=[
             types.ContentType.DOCUMENT,
             types.ContentType.TEXT,
-            types.ContentType.PHOTO
         ]
     )
