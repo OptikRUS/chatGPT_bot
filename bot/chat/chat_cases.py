@@ -45,6 +45,7 @@ async def process_output(inline_button: str, message: Message) -> None:
             await image_variation(photo_url=photo_url, message=message)
 
 
+
 async def button_selection(callback_query: CallbackQuery) -> None:
     if callback_query.data == GENERATE_IMAGE_BUTTON:
         await callback_query.bot.send_message(
