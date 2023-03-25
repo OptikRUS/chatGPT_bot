@@ -1,4 +1,4 @@
-from aiogram.types import Message, CallbackQuery, file, PhotoSize
+from aiogram.types import Message, CallbackQuery
 
 from .api_cases import image_generation, text_generation, code_generation, image_variation
 from .constants import (

@@ -1,1 +1,1 @@
-from bot.chat.utils.slice_message import SliceMessage
+from .slice_message import SliceMessage
