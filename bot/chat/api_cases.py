@@ -1,7 +1,7 @@
 from aiogram.types import InputMediaPhoto, Message, ParseMode
 
 from .sessions import create_session
-from .utils.slice_message import SliceMessage
+from .utils import SliceMessage
 from .wrappers import api_exceptions
 from .constants.request_data import (
     code_request_data,
