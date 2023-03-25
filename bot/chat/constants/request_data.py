@@ -1,5 +1,4 @@
 import aiohttp
-from aiogram.types import Message
 
 from config import chat_config
 
@@ -67,6 +66,9 @@ async def image_variation_request_data(photo_url: str):
         )
     )
 
-    del response_data.get('headers')['Content-Type']
+    try:
+        response_data.get('headers').pop('Content-Type')
+    except KeyError:
+        pass
 
     return response_data
